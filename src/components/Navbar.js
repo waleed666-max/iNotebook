@@ -33,76 +33,66 @@ const Navbar = () => {
                 boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
             }}>
                 <div className="container-fluid">
-                    {/* Brand with icon */}
-                    <Link className="navbar-brand fw-bold d-flex align-items-center" to="/" style={{ fontSize: "1.5rem" }}>
-                        <i className="fas fa-book-open me-2" style={{ fontSize: "1.3rem" }}></i>
+                    <Link className="navbar-brand fw-bold d-flex align-items-center brand-text" to="/">
+                        <i className="fas fa-book-open me-2 brand-icon"></i>
                         iNotebook
                     </Link>
-                    
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <div className="d-flex align-items-center order-lg-2">
+                        {/* Auth buttons: always visible, icon-based on mobile */}
+                        {!localStorage.getItem('token') ? (
+                             (location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/about") && (
+                            <div className="d-flex gap-2 auth-btn-group">
+                                <Link className="btn btn-light auth-icon-btn" to="/login" title="Login">
+                                    <i className="fas fa-sign-in-alt"></i>
+                                    <span className="auth-btn-label">Login</span>
+                                </Link>
+                                <Link className="btn btn-outline-light auth-icon-btn" to="/signup" title="Sign Up">
+                                    <i className="fas fa-user-plus"></i>
+                                    <span className="auth-btn-label">Sign Up</span>
+                                </Link>
+                            </div>
+                            )
+                        ) : (
+                            <button className="btn btn-light auth-icon-btn" onClick={handleLogout} title="Logout">
+                                <i className="fas fa-sign-out-alt"></i>
+                                <span className="auth-btn-label">Logout</span>
+                            </button>
+                        )}
+
+                        <button className="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+
+                    <div className="collapse navbar-collapse order-lg-1" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 mt-2 mt-lg-0">
                             <li className="nav-item">
-                                <Link 
-                                    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/"? "active" : ""}`} 
-                                    aria-current="page" 
+                                <Link
+                                    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/"? "active" : ""}`}
+                                    aria-current="page"
                                     to="/"
                                 >
                                     <i className="fas fa-home me-1"></i>Home
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link 
-                                    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/about"? "active" : ""}`} 
+                                <Link
+                                    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/about"? "active" : ""}`}
                                     to="/about"
                                 >
                                     <i className="fas fa-info-circle me-1"></i>About
                                 </Link>
                             </li>
                         </ul>
-                        
-                        {!localStorage.getItem('token') ? (
-                            <div className="d-flex">
-                                <Link 
-                                    className="btn btn-light mx-2 fw-semibold auth-btn" 
-                                    to="/login"
-                                    style={{ borderRadius: "8px" }}
-                                >
-                                    <i className="fas fa-sign-in-alt me-1"></i>Login
-                                </Link>
-                                <Link 
-                                    className="btn btn-outline-light mx-2 fw-semibold auth-btn-outline" 
-                                    to="/signup"
-                                    style={{ borderRadius: "8px" }}
-                                >
-                                    <i className="fas fa-user-plus me-1"></i>Sign Up
-                                </Link>
-                            </div>
-                        ) : (
-                            <button 
-                                className="btn btn-light fw-semibold logout-btn" 
-                                onClick={handleLogout}
-                                style={{ borderRadius: "8px" }}
-                            >
-                                <i className="fas fa-sign-out-alt me-1"></i>Logout
-                            </button>
-                        )}
                     </div>
                 </div>
             </nav>
 
-            {/* CSS Styling */}
             <style>{`
-                .navbar-brand {
-                    transition: transform 0.3s ease;
-                }
-
-                .navbar-brand:hover {
-                    transform: scale(1.05);
-                }
+                .brand-text { font-size: 1.5rem; transition: transform 0.3s ease; }
+                .brand-text:hover { transform: scale(1.05); }
+                .brand-icon { font-size: 1.3rem; }
 
                 .nav-link-custom {
                     transition: all 0.3s ease;
@@ -110,49 +100,53 @@ const Navbar = () => {
                     padding: 8px 16px !important;
                     margin: 0 4px;
                 }
-
                 .nav-link-custom:hover {
                     background: rgba(255,255,255,0.2);
                     transform: translateY(-2px);
                 }
-
                 .nav-link-custom.active {
                     background: rgba(255,255,255,0.3);
                     font-weight: bold;
                 }
 
-                .auth-btn {
-                    transition: all 0.3s ease;
+                .auth-icon-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 7px;
+                    border-radius: 50px;
+                    font-weight: 600;
+                    padding: 8px 16px;
                     color: #667eea !important;
-                }
-
-                .auth-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 5px 15px rgba(255,255,255,0.3);
-                    background: white !important;
-                }
-
-                .auth-btn-outline {
                     transition: all 0.3s ease;
-                    border: 2px solid white !important;
+                    white-space: nowrap;
                 }
-
-                .auth-btn-outline:hover {
-                    background: white !important;
-                    color: #667eea !important;
+                .btn-outline-light.auth-icon-btn {
+                    color: #fff !important;
+                    border: 2px solid rgba(255,255,255,0.6);
+                }
+                .auth-icon-btn:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 5px 15px rgba(255,255,255,0.3);
                 }
-
-                .logout-btn {
-                    transition: all 0.3s ease;
+                .btn-outline-light.auth-icon-btn:hover {
+                    background: white !important;
                     color: #667eea !important;
                 }
 
-                .logout-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 5px 15px rgba(255,255,255,0.3);
-                    background: white !important;
+                @media (max-width: 480px) {
+                    .brand-text { font-size: 1.15rem; }
+                    .brand-icon { font-size: 1.05rem; }
+
+                    .auth-icon-btn {
+                        width: 40px;
+                        height: 40px;
+                        padding: 0;
+                        justify-content: center;
+                        border-radius: 50%;
+                    }
+                    .auth-btn-label { display: none; }
+                    .auth-icon-btn i { font-size: 1.05rem; margin: 0; }
+                    .auth-btn-group { gap: 8px !important; }
                 }
             `}</style>
         </div>
