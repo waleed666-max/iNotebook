@@ -10,9 +10,9 @@ const Signup = (props) =>{
         e.preventDefault();
         const {name, email, password, cpassword} = credential;
         if(password !== cpassword){
-            alert("Password and Confirm Password must be same");
-            return;
-        }
+    props.showAlert("Password and Confirm Password must be same", "danger");
+    return;
+}
         const response= await fetch(`${host}/api/auth/createuser`,{
             method:'POST',
             headers:{
@@ -155,11 +155,12 @@ const Signup = (props) =>{
             </div>
 
             <style>{`
+            
                 .auth-container {
-                    max-width: 500px;
-                    margin: 8px auto 0;
-                    padding: 0 16px;
-                }
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
                 .auth-card-body { padding: 1.75rem; }
 
                 .icon-box {
@@ -223,20 +224,20 @@ const Signup = (props) =>{
 
                 .auth-footer-text { font-size: 0.8rem; }
 
-                @media (max-width: 480px) {
-                    .auth-container { margin-top: 4px; padding: 0 12px; }
-                    .auth-card-body { padding: 1.1rem 1rem; }
-                    .icon-box { width: 56px; height: 56px; font-size: 26px; margin-bottom: 10px !important; }
-                    .auth-title { font-size: 1.3rem; }
-                    .auth-subtitle { font-size: 0.82rem; }
-                    .auth-label { font-size: 0.85rem; }
-                    .auth-input { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
-                    .auth-submit-btn { padding: 0.6rem 0.9rem; font-size: 0.9rem; }
-                    .auth-divider { margin: 14px 0; }
-                    .auth-footer-text { font-size: 0.72rem; }
-                    .mb-3 { margin-bottom: 0.7rem !important; }
-                    .mb-4 { margin-bottom: 0.9rem !important; }
-                }
+             @media (max-width: 480px) {
+    .auth-container {  padding: 0 12px; }
+    .auth-card-body { padding: 1.35rem 1.15rem; }
+    .icon-box { width: 64px; height: 64px; font-size: 30px; margin-bottom: 12px !important; }
+    .auth-title { font-size: 1.45rem; }
+    .auth-subtitle { font-size: 1.0rem; }
+    .auth-label { font-size: .99rem; }
+    .auth-input { padding: 0.6rem 0.85rem; font-size: 0.97rem; }
+    .auth-submit-btn { padding: 0.65rem 1rem; font-size: 0.95rem; }
+    .auth-divider { margin: 16px 0; }
+    .auth-footer-text { font-size: 0.78rem; }
+    .mb-3 { margin-bottom: 0.85rem !important; }
+    .mb-4 { margin-bottom: 1.05rem !important; }
+}
             `}</style>
         </div>
     )

@@ -25,13 +25,37 @@ const Navbar = () => {
     };
 
     let location = useLocation();
+    const showAuthButtons = location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/about";
+
+    const AuthButtons = () => (
+        !localStorage.getItem('token') ? (
+            showAuthButtons && (
+                <div className="d-flex gap-2 auth-btn-group">
+                    <Link className="btn btn-light auth-icon-btn" to="/login" title="Login">
+                        <i className="fas fa-sign-in-alt"></i>
+                        <span className="auth-btn-label">Login</span>
+                    </Link>
+                    <Link className="btn btn-outline-light auth-icon-btn" to="/signup" title="Sign Up">
+                        <i className="fas fa-user-plus"></i>
+                        <span className="auth-btn-label">Sign Up</span>
+                    </Link>
+                </div>
+            )
+        ) : (
+            <button className="btn btn-light auth-icon-btn" onClick={handleLogout} title="Logout">
+                <i className="fas fa-sign-out-alt"></i>
+                <span className="auth-btn-label">Logout</span>
+            </button>
+        )
+    );
 
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark" style={{
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
-            }}>
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+    marginBottom: "28px"
+}}>
                 <div className="container-fluid">
                     <Link className="navbar-brand fw-bold d-flex align-items-center brand-text" to="/">
                         <i className="fas fa-book-open me-2 brand-icon"></i>
@@ -39,26 +63,10 @@ const Navbar = () => {
                     </Link>
 
                     <div className="d-flex align-items-center order-lg-2">
-                        {/* Auth buttons: always visible, icon-based on mobile */}
-                        {!localStorage.getItem('token') ? (
-                             (location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/about") && (
-                            <div className="d-flex gap-2 auth-btn-group">
-                                <Link className="btn btn-light auth-icon-btn" to="/login" title="Login">
-                                    <i className="fas fa-sign-in-alt"></i>
-                                    <span className="auth-btn-label">Login</span>
-                                </Link>
-                                <Link className="btn btn-outline-light auth-icon-btn" to="/signup" title="Sign Up">
-                                    <i className="fas fa-user-plus"></i>
-                                    <span className="auth-btn-label">Sign Up</span>
-                                </Link>
-                            </div>
-                            )
-                        ) : (
-                            <button className="btn btn-light auth-icon-btn" onClick={handleLogout} title="Logout">
-                                <i className="fas fa-sign-out-alt"></i>
-                                <span className="auth-btn-label">Logout</span>
-                            </button>
-                        )}
+                        {/* Desktop only auth buttons, in the top row */}
+                        <div className="d-none d-lg-flex">
+                            <AuthButtons />
+                        </div>
 
                         <button className="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -66,15 +74,15 @@ const Navbar = () => {
                     </div>
 
                     <div className="collapse navbar-collapse order-lg-1" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 mt-2 mt-lg-0">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 mobile-nav-list">
                             <li className="nav-item">
-                                <Link
-                                    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/"? "active" : ""}`}
-                                    aria-current="page"
-                                    to="/"
-                                >
-                                    <i className="fas fa-home me-1"></i>Home
-                                </Link>
+                              <Link
+    className={`nav-link fw-semibold nav-link-custom ${location.pathname==="/"? "active" : ""}`}
+    aria-current="page"
+    to={localStorage.getItem('token') ? "/" : "/login"}
+>
+    <i className="fas fa-home me-1"></i>Home
+</Link>
                             </li>
                             <li className="nav-item">
                                 <Link
@@ -85,6 +93,11 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         </ul>
+
+                        {/* Mobile only auth buttons, inside the dropdown menu */}
+                        <div className="d-lg-none mobile-auth-wrap">
+                            <AuthButtons />
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -133,20 +146,33 @@ const Navbar = () => {
                     color: #667eea !important;
                 }
 
+                @media (max-width: 991px) {
+    .mobile-nav-list {
+        margin-top: 14px;
+    }
+}
+                .mobile-auth-wrap {
+                    margin-top: 16px;
+                    padding-top: 14px;
+                    border-top: 1px solid rgba(255,255,255,0.2);
+                    padding-bottom: 8px;
+                }
+                .mobile-auth-wrap .auth-btn-group {
+                    flex-direction: column;
+                }
+                .mobile-auth-wrap .auth-icon-btn {
+                    width: 100%;
+                    justify-content: center;
+                    border-radius: 10px;
+                    padding: 10px 16px;
+                }
+                .mobile-auth-wrap .auth-btn-label {
+                    display: inline !important;
+                }
+
                 @media (max-width: 480px) {
                     .brand-text { font-size: 1.15rem; }
                     .brand-icon { font-size: 1.05rem; }
-
-                    .auth-icon-btn {
-                        width: 40px;
-                        height: 40px;
-                        padding: 0;
-                        justify-content: center;
-                        border-radius: 50%;
-                    }
-                    .auth-btn-label { display: none; }
-                    .auth-icon-btn i { font-size: 1.05rem; margin: 0; }
-                    .auth-btn-group { gap: 8px !important; }
                 }
             `}</style>
         </div>

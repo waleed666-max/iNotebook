@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="container my-1">
+    <div className="container about-page-container">
 
       {/* Hero Section */}
       <div className="text-center mb-5">
@@ -188,6 +188,21 @@ const About = () => {
 
       {/* Enhanced Hover Effect CSS */}
       <style>{`
+      
+        .about-page-container {
+          margin-top: 32px;
+          margin-bottom: 24px;
+        }
+
+        @media (max-width: 480px) {
+          .about-page-container {
+            margin-top: 20px;
+            padding-left: 14px;
+            padding-right: 14px;
+          }
+        }
+
+        
         .hover-card {
           transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
           cursor: pointer;

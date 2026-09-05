@@ -24,7 +24,7 @@ const Login = (props) => {
             navigate("/");
         }
         else{
-            props.showAlert("Invalid Details", "danger");
+           props.showAlert(json.error, "danger");
         }
     }
 
@@ -122,10 +122,10 @@ const Login = (props) => {
 
             <style>{`
                 .auth-container {
-                    max-width: 450px;
-                    margin: 8px auto 0;
-                    padding: 0 16px;
-                }
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
                 .auth-card-body { padding: 2rem; }
 
                 .icon-box {
@@ -188,21 +188,22 @@ const Login = (props) => {
                 }
 
                 .auth-footer-text { font-size: 0.8rem; }
-
-                @media (max-width: 480px) {
-                    .auth-container { margin-top: 4px; padding: 0 12px; }
-                    .auth-card-body { padding: 1.25rem 1.1rem; }
-                    .icon-box { width: 56px; height: 56px; font-size: 26px; margin-bottom: 10px !important; }
-                    .auth-title { font-size: 1.3rem; }
-                    .auth-subtitle { font-size: 0.82rem; }
-                    .auth-label { font-size: 0.85rem; }
-                    .auth-input { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
-                    .auth-submit-btn { padding: 0.6rem 0.9rem; font-size: 0.9rem; }
-                    .auth-divider { margin: 14px 0; }
-                    .auth-footer-text { font-size: 0.72rem; }
-                    .mb-3 { margin-bottom: 0.8rem !important; }
-                    .mb-4 { margin-bottom: 1rem !important; }
-                }
+                                  @media (max-width: 480px) {
+    .auth-container { padding: 0 12px; }
+    .auth-card-body { padding: 1.5rem 1.25rem; }
+    .icon-box { width: 64px; height: 64px; font-size: 30px; margin-bottom: 12px !important; }
+    .auth-title { font-size: 1.45rem; }
+    .auth-subtitle { font-size: 1.0rem; }
+    .auth-label { font-size: .99rem; }
+    .auth-input { padding: 0.6rem 0.85rem; font-size: 0.97rem; }
+    .auth-submit-btn { padding: 0.65rem 1rem; font-size: 0.95rem; }
+    .auth-divider { margin: 16px 0; }
+    .auth-footer-text { font-size: 0.78rem; }
+    .mb-3 { margin-bottom: 0.9rem !important; }
+    .mb-4 { margin-bottom: 1.1rem !important; }
+}
+    
+                
             `}</style>
         </div>
     )

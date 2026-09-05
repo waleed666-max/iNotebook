@@ -12,8 +12,10 @@ import  { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
+
 import NoteState from './context/notes/NoteState';
 
 function App() {
@@ -26,7 +28,7 @@ function App() {
       })
   setTimeout(() => {
   setAlert(null);
-}, 1500);
+}, 3500);
    }
   return (
     <NoteState>
@@ -37,7 +39,7 @@ function App() {
       <div className="container">
 
       <Routes>
-       <Route path="/"element={<Home showAlert={showAlert} />}/>
+       <Route path="/" element={localStorage.getItem('token') ? <Home showAlert={showAlert} /> : <Navigate to="/login" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login  showAlert={showAlert} />} />
         <Route path="/signup" element={<Signup   showAlert={showAlert} />} />

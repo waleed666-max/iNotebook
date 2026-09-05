@@ -18,7 +18,10 @@ router.post('/createuser', [
     //if there are errors, return bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ success, errors: errors.array() });
+        return res.status(400).json({
+            success: false,
+            error: errors.array()[0].msg
+        });
     }
 
     try {
@@ -71,7 +74,10 @@ router.post('/login', [
     //if there are errors, return bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({
+            success: false,
+            error: errors.array()[0].msg
+        });
     }
 
     const { email, password } = req.body;
@@ -80,7 +86,7 @@ router.post('/login', [
           if (!user) {
             return res.status(400).json({
                 success: false,  // 
-                error: "Please try to login with correct credentials"
+                error: "Incorrect email. Please try again"
             });
         }
 
@@ -88,7 +94,7 @@ router.post('/login', [
         if (!passwordCompare) {
             return res.status(400).json({
                 success: false, // 
-                error: "Please try to login with correct credentials"
+                error: "Incorrect password. Please try again"
             });
         }
          
